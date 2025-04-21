@@ -3,6 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductsModule } from './products/products.module';
+import { BrandsModule } from './brands/brands.module';
+import { CategoriesModule } from './categories/categories.module';
+import { SuppliersModule } from './suppliers/suppliers.module';
 
 @Module({
   imports: [
@@ -16,6 +20,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       entities: ['src/**/*.entity.{ts,js}'],
     }),
     UsersModule,
+    ProductsModule,
+    BrandsModule,
+    CategoriesModule,
+    SuppliersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
