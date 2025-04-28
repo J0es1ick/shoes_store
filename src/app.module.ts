@@ -7,6 +7,9 @@ import { ProductsModule } from './products/products.module';
 import { BrandsModule } from './brands/brands.module';
 import { CategoriesModule } from './categories/categories.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
+import { SizesModule } from './sizes/sizes.module';
+import { OrdersModule } from './orders/orders.module';
+import { OrderDetailsModule } from './order_details/order_details.module';
 
 @Module({
   imports: [
@@ -24,6 +27,9 @@ import { SuppliersModule } from './suppliers/suppliers.module';
     BrandsModule,
     CategoriesModule,
     SuppliersModule,
+    SizesModule,
+    OrdersModule,
+    OrderDetailsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

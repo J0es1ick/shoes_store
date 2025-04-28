@@ -32,7 +32,7 @@ export class BrandsController {
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.brandsService.findOne(+id);
+    return this.brandsService.findOne(id);
   }
 
   @Patch(':id')
@@ -40,11 +40,11 @@ export class BrandsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateBrandDto: UpdateBrandDto,
   ) {
-    return this.brandsService.update(+id, updateBrandDto);
+    return this.brandsService.update(id, updateBrandDto);
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.brandsService.remove(+id);
+    return this.brandsService.remove(id);
   }
 }

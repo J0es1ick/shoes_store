@@ -22,17 +22,20 @@ export class BrandsService {
     });
 
     if (existingbrand) {
-      throw new ConflictException('brand with this name already exists');
+      throw new ConflictException('Brand with this name already exists');
     }
 
     const brand = this.brandRepository.create(createBrandDto);
     return this.brandRepository.save(brand);
   }
 
-  async findAll(page: number = 1, limit: number = 10) {
+  async findAll(page: number = 1, limit: number = 8) {
+    limit = Math.min(limit, 100);
+
     const [brands, total] = await this.brandRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
+      order: { brand_name: 'DESC' },
     });
 
     return {

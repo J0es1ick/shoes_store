@@ -55,11 +55,13 @@ export class ProductsService {
 
   async findAll(
     page: number = 1,
-    limit: number = 10,
+    limit: number = 8,
     categoryIds?: number[],
     brandIds?: number[],
   ) {
     const where = {};
+
+    limit = Math.min(limit, 100);
 
     if (categoryIds?.length) {
       where['category'] = { category_id: In(categoryIds) };
@@ -74,6 +76,7 @@ export class ProductsService {
       relations: ['brand', 'category', 'supplier'],
       skip: (page - 1) * limit,
       take: limit,
+      order: { product_id: 'DESC' },
     });
 
     return {

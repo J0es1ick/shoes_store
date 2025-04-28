@@ -25,26 +25,26 @@ export class SuppliersController {
   @Get()
   findAll(
     @Query('page', new ParseIntPipe({ optional: true })) page: number = 1,
-    @Query('limit', new ParseIntPipe({ optional: true })) limit: number = 10,
+    @Query('limit', new ParseIntPipe({ optional: true })) limit: number = 8,
   ) {
     return this.suppliersService.findAll(page, limit);
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: string) {
-    return this.suppliersService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.suppliersService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateSupplierDto: UpdateSupplierDto,
   ) {
-    return this.suppliersService.update(+id, updateSupplierDto);
+    return this.suppliersService.update(id, updateSupplierDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: string) {
-    return this.suppliersService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.suppliersService.remove(id);
   }
 }

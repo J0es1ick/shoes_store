@@ -29,22 +29,17 @@ export class CategoriesService {
     return this.categoryRepository.save(category);
   }
 
-  async findAll(page: number = 1, limit: number = 10, search?: string) {
-    const query = this.categoryRepository.createQueryBuilder('category');
+  async findAll(page: number = 1, limit: number = 8) {
+    limit = Math.min(limit, 100);
 
-    if (search) {
-      query.andWhere('category.category_name LIKE :search', {
-        search: `%${search}%`,
-      });
-    }
-
-    const [categories, total] = await query
-      .skip((page - 1) * limit)
-      .take(limit)
-      .getManyAndCount();
+    const [brands, total] = await this.categoryRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      order: { category_name: 'DESC' },
+    });
 
     return {
-      data: categories,
+      data: brands,
       total,
       page,
       totalPages: Math.ceil(total / limit),

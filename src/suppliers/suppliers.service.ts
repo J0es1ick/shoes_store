@@ -36,9 +36,12 @@ export class SuppliersService {
   }
 
   async findAll(page: number = 1, limit: number = 8) {
+    limit = Math.min(limit, 100);
+
     const [suppliers, total] = await this.supplierRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
+      order: { supplier_id: 'DESC' },
     });
 
     return {

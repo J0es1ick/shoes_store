@@ -35,7 +35,7 @@ export class ProductsController {
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.productsService.findOne(+id);
+    return this.productsService.findOne(id);
   }
 
   @Patch(':id')
@@ -43,11 +43,11 @@ export class ProductsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,
   ) {
-    return this.productsService.update(+id, updateProductDto);
+    return this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.productsService.remove(+id);
+    return this.productsService.remove(id);
   }
 }

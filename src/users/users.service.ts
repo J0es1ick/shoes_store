@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
@@ -12,17 +17,40 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create({
-      ...createUserDto,
+  async create(createUserDto: CreateUserDto) {
+    const existingUser = await this.userRepository.findOne({
+      where: [
+        { username: createUserDto.username },
+        { email: createUserDto.email },
+      ],
     });
+
+    if (existingUser) {
+      throw new ConflictException(
+        'User with this email or phone already exists',
+      );
+    }
+
+    const user = this.userRepository.create(createUserDto);
 
     return this.userRepository.save(user);
   }
 
-  async findAll() {
-    const users = await this.userRepository.find();
-    return users;
+  async findAll(page: number = 1, limit: number = 8) {
+    limit = Math.min(limit, 100);
+
+    const [users, total] = await this.userRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      order: { createdAt: 'DESC' },
+    });
+
+    return {
+      data: users,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: number) {
@@ -36,6 +64,25 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
+    if (Object.keys(updateUserDto).length === 0) {
+      throw new BadRequestException('No fields to update');
+    }
+
+    if (updateUserDto.email || updateUserDto.username) {
+      const existingUser = await this.userRepository.findOne({
+        where: [
+          { username: updateUserDto.username },
+          { email: updateUserDto.email },
+        ],
+      });
+
+      if (existingUser && existingUser.user_id !== id) {
+        throw new ConflictException(
+          'User with this email or phone already exists',
+        );
+      }
+    }
+
     const user = await this.findOne(id);
     const updatedUser = this.userRepository.merge(user, updateUserDto);
 

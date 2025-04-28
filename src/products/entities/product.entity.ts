@@ -1,15 +1,19 @@
 import { IsPositive, IsString } from 'class-validator';
-import { Brand } from 'src/brands/entities/brand.entity';
-import { Category } from 'src/categories/entities/category.entity';
-import { Supplier } from 'src/suppliers/entities/supplier.entity';
+import { Brand } from '../../brands/entities/brand.entity';
+import { Category } from '../../categories/entities/category.entity';
+import { Size } from '../../sizes/entities/size.entity';
+import { Supplier } from '../../suppliers/entities/supplier.entity';
 import {
   PrimaryGeneratedColumn,
   Index,
   Column,
   ManyToOne,
+  OneToMany,
+  Entity,
   JoinColumn,
 } from 'typeorm';
 
+@Entity()
 export class Product {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   @Index()
@@ -28,14 +32,17 @@ export class Product {
   current_price: number;
 
   @ManyToOne(() => Category, (category) => category.products)
-  @JoinColumn({ name: 'category_ID' })
+  @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @ManyToOne(() => Supplier, (supplier) => supplier.products)
-  @JoinColumn({ name: 'supplier_ID' })
+  @JoinColumn({ name: 'supplier_id' })
   supplier: Supplier;
 
   @ManyToOne(() => Brand, (brand) => brand.products)
-  @JoinColumn({ name: 'brand_ID' })
+  @JoinColumn({ name: 'brand_id' })
   brand: Brand;
+
+  @OneToMany(() => Size, (size) => size.product)
+  sizes: Size[];
 }

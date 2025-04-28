@@ -1,5 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Index,
+  OneToMany,
+  CreateDateColumn,
+} from 'typeorm';
 import { IsEmail, IsString, MinLength, Matches } from 'class-validator';
+import { Order } from '../../orders/entities/order.entity';
 
 @Entity()
 export class User {
@@ -34,4 +42,14 @@ export class User {
       'Password too weak. Must include uppercase, lowercase, and numbers/symbols',
   })
   password: string;
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    name: 'created_at',
+  })
+  createdAt: Date;
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
 }
