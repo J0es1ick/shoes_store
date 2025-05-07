@@ -9,6 +9,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { OrderDetails } from '../../order_details/entities/order_detail.entity';
 
 @Entity()
 export class Order {
@@ -23,4 +24,7 @@ export class Order {
   @ManyToOne(() => User, (user) => user.orders)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @OneToMany(() => OrderDetails, (orderDetails) => orderDetails.order)
+  orderDetails: OrderDetails[];
 }

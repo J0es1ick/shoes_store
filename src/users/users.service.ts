@@ -27,7 +27,7 @@ export class UsersService {
 
     if (existingUser) {
       throw new ConflictException(
-        'User with this email or phone already exists',
+        'User with this email or username already exists',
       );
     }
 
