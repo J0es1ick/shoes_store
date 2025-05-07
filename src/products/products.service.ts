@@ -1,15 +1,14 @@
 import {
   BadRequestException,
-  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Brand } from 'src/brands/entities/brand.entity';
-import { Category } from 'src/categories/entities/category.entity';
-import { Supplier } from 'src/suppliers/entities/supplier.entity';
+import { Brand } from '../brands/entities/brand.entity';
+import { Category } from '../categories/entities/category.entity';
+import { Supplier } from '../suppliers/entities/supplier.entity';
 import { In, Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 

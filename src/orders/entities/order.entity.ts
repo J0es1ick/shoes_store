@@ -1,6 +1,5 @@
 import { IsPositive } from 'class-validator';
 import { User } from '../../users/entities/user.entity';
-import { OrderDetails } from '../../order_details/entities/order_detail.entity';
 import {
   Column,
   Entity,
@@ -24,7 +23,4 @@ export class Order {
   @ManyToOne(() => User, (user) => user.orders)
   @JoinColumn({ name: 'user_id' })
   user: User;
-
-  @OneToMany(() => OrderDetails, (orderDetails) => orderDetails.order)
-  orderDetails: OrderDetails[];
 }

@@ -1,7 +1,6 @@
 import { IsPositive, IsString } from 'class-validator';
 import { Brand } from '../../brands/entities/brand.entity';
 import { Category } from '../../categories/entities/category.entity';
-import { Size } from '../../sizes/entities/size.entity';
 import { Supplier } from '../../suppliers/entities/supplier.entity';
 import {
   PrimaryGeneratedColumn,
@@ -12,6 +11,7 @@ import {
   Entity,
   JoinColumn,
 } from 'typeorm';
+import { Size } from 'src/sizes/entities/size.entity';
 
 @Entity()
 export class Product {

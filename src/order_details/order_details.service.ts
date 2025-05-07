@@ -7,8 +7,8 @@ import {
 import { CreateOrderDetailDto } from './dto/create-order_detail.dto';
 import { UpdateOrderDetailDto } from './dto/update-order_detail.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Order } from 'src/orders/entities/order.entity';
-import { Size } from 'src/sizes/entities/size.entity';
+import { Order } from '../orders/entities/order.entity';
+import { Size } from '../sizes/entities/size.entity';
 import { Repository } from 'typeorm';
 import { OrderDetails } from './entities/order_detail.entity';
 

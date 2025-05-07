@@ -9,9 +9,11 @@ import { SizesModule } from 'src/sizes/sizes.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([OrderDetails]),
-    forwardRef(() => [OrdersModule, SizesModule]),
+    forwardRef(() => OrdersModule),
+    forwardRef(() => SizesModule),
   ],
   controllers: [OrderDetailsController],
   providers: [OrderDetailsService],
+  exports: [OrderDetailsService, TypeOrmModule],
 })
 export class OrderDetailsModule {}

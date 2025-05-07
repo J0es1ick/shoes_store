@@ -3,33 +3,27 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductsModule } from './products/products.module';
-import { BrandsModule } from './brands/brands.module';
-import { CategoriesModule } from './categories/categories.module';
-import { SuppliersModule } from './suppliers/suppliers.module';
-import { SizesModule } from './sizes/sizes.module';
+import dotenv from 'dotenv';
+import path from 'path';
+import { User } from './users/entities/user.entity';
+import { Order } from './orders/entities/order.entity';
 import { OrdersModule } from './orders/orders.module';
-import { OrderDetailsModule } from './order_details/order_details.module';
+import { BrandsModule } from './brands/brands.module';
+import { SuppliersModule } from './suppliers/suppliers.module';
+import { CategoriesModule } from './categories/categories.module';
+import { Brand } from './brands/entities/brand.entity';
+import { Supplier } from './suppliers/entities/supplier.entity';
+import { Category } from './categories/entities/category.entity';
+import { AppDataSource } from './data-source';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT!),
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      entities: ['src/**/*.entity.{ts,js}'],
-    }),
+    TypeOrmModule.forRoot(AppDataSource.options),
     UsersModule,
-    ProductsModule,
-    BrandsModule,
-    CategoriesModule,
-    SuppliersModule,
-    SizesModule,
     OrdersModule,
-    OrderDetailsModule,
+    BrandsModule,
+    SuppliersModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
